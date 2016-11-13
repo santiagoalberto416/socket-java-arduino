@@ -25,10 +25,19 @@ app.listen(8081, function () {
 
 io.sockets.on('connection', function (socket) {
 
-	socket.on('nickname', function (nicknames) {
-		  socket.broadcast.emit('nicknames', "chicle");
-	      io.sockets.emit('nicknames', nicknames);
-	      console.log("nicknames")
-	    });
+	socket.on('disconnect', function(){
+  	console.log('user disconnect');
+  });
+
+	  io.on('connection', function(socket){
+	  socket.on('chat message', function(msg){
+	    console.log('message: ' + msg);
+	  });
+	});
+
+  	socket.on('removeAction', function(data){
+			console.log('REMOVER');
+			io.sockets.emit('removeScreen', data);
+		});
 
 });
