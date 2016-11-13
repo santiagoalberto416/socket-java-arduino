@@ -33,7 +33,7 @@ function getIdLocations(){
 	if(txtIdLocation != '' && isNaN(txtIdLocation) == false){
 		if(txtIdLocation > 0){
 			console.log("numeric value valid");
-			idlocation = txtIdLocation;
+			validateIdArduino(txtIdLocation);
 		}
 	}else{
 		alert("put a numeric value and dont let empty");
@@ -41,5 +41,6 @@ function getIdLocations(){
 }
 
 function validateIdArduino(id){
+	idlocation = id;
 	
 }
