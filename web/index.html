@@ -9,11 +9,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      var socket = io.connect('http://localhost:8081');
-      socket.on('removeScreen', function(msg){
-        console.log("message" + msg);
-      });
-        socket.emit('removeQuestion', "example");
+      var socket = io.connect();
+          console.log("enter to this shit");
+            socket.on('connect', function () {
+              console.log("is connected succesfull");
+            });
+
+            socket.emit('nickname', "papu");
+
+            socket.on('nicknames', function (nicknames) {
+                console.log("exist nicknames");
+            });
     </script>
   </body>
 </html>

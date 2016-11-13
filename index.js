@@ -22,29 +22,13 @@ app.listen(8081, function () {
   console.log('   app listening on http://' + addr.address + ':' + addr.port);
 });
 
-io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
 
 io.sockets.on('connection', function (socket) {
 
-
-  socket.on('disconnect', function(){
-  	console.log('user disconnect');
-  });
-
-	  io.on('connection', function(socket){
-	  socket.on('chat message', function(msg){
-	    console.log('message: ' + msg);
-	  });
-	});
-
-  	socket.on('removeAction', function(data){
-			console.log('REMOVER');
-			io.sockets.emit('removeScreen', data);
-		});
+	socket.on('nickname', function (nicknames) {
+		  socket.broadcast.emit('nicknames', "chicle");
+	      io.sockets.emit('nicknames', nicknames);
+	      console.log("nicknames")
+	    });
 
 });
