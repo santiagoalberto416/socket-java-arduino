@@ -1,17 +1,50 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var io = require('socket.io');
+var express = require('express');
+var app = express.createServer()
+  , io = io.listen(app);
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+app.configure(function () {
+  app.use(express.static(__dirname + '/web'));
+
+  function compile (str, path) {
+    return stylus(str)
+      .set('filename', path)
+      .use(nib());
+  };
 });
 
-io.on('connection', function(socket){
-  socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+app.get('/', function (req, res) {
+  res.render('index', { layout: false });
+});
+
+app.listen(8081, function () {
+  var addr = app.address();
+  console.log('   app listening on http://' + addr.address + ':' + addr.port);
+});
+
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
   });
 });
 
-http.listen(3000, function(){
-  console.log('listening on *:3000');
+io.sockets.on('connection', function (socket) {
+
+
+  socket.on('disconnect', function(){
+  	console.log('user disconnect');
+  });
+
+	  io.on('connection', function(socket){
+	  socket.on('chat message', function(msg){
+	    console.log('message: ' + msg);
+	  });
+	});
+
+  	socket.on('removeAction', function(data){
+			console.log('REMOVER');
+			io.sockets.emit('removeScreen', data);
+		});
+
 });
