@@ -1,6 +1,14 @@
 html {
   background-color: #82a43a; 
 }
+
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+
 #miVentana
 {
 	background-color: #FFFFFF;
@@ -16,4 +24,15 @@ html {
 	margin: auto;
     width: 60%;
     padding: 10px;
+    z-index: 2;
+}
+
+#layerDark
+{
+	margin: auto;
+	background-color: black;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    z-index: 1;
 }

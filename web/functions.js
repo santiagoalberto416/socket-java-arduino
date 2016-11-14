@@ -1,7 +1,9 @@
 var urlServer = 'http://localhost/friendlydisplays/';//modificar una vez se cambie de nombre a la carpeta
+var visibleLayout = true;
 //var urlImages 
 var x = new XMLHttpRequest();
 var idLocation = 0; 
+var myVar;
 //i need timer every time anyone pass in front activate the div for 30 seconds
 
 //calling start methods
@@ -10,9 +12,25 @@ setActionsToButtoms();
 
 var socket = io.connect('http://localhost:8081');
       socket.on('removeScreen', function(msg){
-        console.log("message" + msg);
+        var message = JSON.parse(msg);
+        console.log(msg);
+        console.log("the id from the client is:"+message["locationid"]);
+        if(message["locationid"] == idlocation){
+        	hideModalDarkLayer();
+	        clearTimeout(myVar);
+	        myVar = setTimeout(showModalDarkLayer, 5000);
+        }
       });
-        socket.emit('removeAction', "example");
+
+function showModalDarkLayer(){
+	var ventana = document.getElementById("layerDark");
+    ventana.style.display = "block";
+}
+
+function hideModalDarkLayer(){
+	var ventana = document.getElementById("layerDark");
+    ventana.style.display = "none";
+}
 
 function showModalLocation()
 {
