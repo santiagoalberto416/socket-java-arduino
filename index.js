@@ -3,6 +3,8 @@ var express = require('express');
 var app = express.createServer()
   , io = io.listen(app);
 
+console.log("app")
+
 app.configure(function () {
   app.use(express.static(__dirname + '/web'));
 
